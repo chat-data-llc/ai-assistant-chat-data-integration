@@ -32,7 +32,7 @@ const validateApiKey = (req, res) => {
 export default async function handler(req, res) {
     // Check if the request method is POST
     if (req.method === 'POST') {
-        validateApiKey(req, res);
+        // validateApiKey(req, res);
         // Process a POST request
         const { messages, stream } = req.body; // Assuming the body contains a "message" field
         try {
@@ -50,15 +50,14 @@ export default async function handler(req, res) {
                 const run = openai.beta.threads.runs.createAndStream(thread.id, {
                     assistant_id: process.env.ASSISTANT_ID
                 })
-                    .on('textDone', (text) => {
+                    .on('end', () => {
                         res.end();
-                        openai.beta.threads.del(thread.id);
                     })
                     .on('textDelta', (textDelta, snapshot) => {
                         res.write(textDelta.value);
                     })
                     .on('toolCallCreated', (toolCall) => {
-                        res.write('```python\n');
+                        res.write('\n```python\n');
                     })
                     .on('toolCallDelta', (toolCallDelta, snapshot) => {
                         if (toolCallDelta.type === 'code_interpreter') {
@@ -66,7 +65,6 @@ export default async function handler(req, res) {
                                 res.write(toolCallDelta.code_interpreter.input)
                             }
                             if (toolCallDelta.code_interpreter.outputs) {
-                                res.write("\noutput >\n");
                                 toolCallDelta.code_interpreter.outputs.forEach(output => {
                                     if (output.type === "logs") {
                                         res.write(`\n${output.logs}\n`);
@@ -76,14 +74,13 @@ export default async function handler(req, res) {
                         }
                     })
                     .on('toolCallDone', (toolCallDelta, snapshot) => {
-                        res.write('```\n');
+                        res.write('\n```\n');
                     });
             } else {
                 let run = await openai.beta.threads.runs.create(
                     thread.id,
                     {
                         assistant_id: process.env.ASSISTANT_ID,
-                        instructions: "Please address the user as Jane Doe. The user has a premium account."
                     }
                 );
                 while (['queued', 'in_progress', 'cancelling'].includes(run.status)) {
@@ -111,7 +108,6 @@ export default async function handler(req, res) {
                 const text = results.reverse().map(result => result.content[0].text.value).join('\n');
                 console.log(text);
                 res.status(200).send(text);
-                openai.beta.threads.del(thread.id);
             }
         } catch (error) {
             console.error(error);

@@ -12,21 +12,21 @@ export default function Home() {
         <title>Integrate OpenAI Assistant With the Website Through Chat Data</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <section className="w-screen h-dvh grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="md:h-full h-80 bg-[#d4dcff] relative overflow-hidden flex justify-center">
+      <section className="w-screen h-full md:h-dvh grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="md:h-full h-[60vh] bg-[#d4dcff] relative overflow-hidden flex justify-center">
           <iframe
             src={`https://www.chat-data.com/chatbot-iframe/${process.env.CHATBOT_ID}`}
             width="100%"
-            style={{ height: "100%", minHeight: "700px" }}
+            allow="clipboard-write"
             frameBorder="0"
           ></iframe>
         </div>
         <main className={`flex flex-col gap-8 mt-8 justify-center px-6 pb-10 ${inter.className}`}>
-          <div className="z-10 max-w-5xl w-full items-center justify-end font-mono text-sm lg:flex">
+          <div className="hidden z-10 max-w-5xl w-full items-center justify-end font-mono text-sm lg:flex">
             <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
               <a
                 className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-                href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
+                href="https://www.chat-data.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -115,7 +115,7 @@ export default function Home() {
                 </tr>
                 <tr >
                   <td className="p-2">
-                    <Link href="https://wa.me/15550547504" target="_blank" rel="noopener noreferrer">
+                    <Link href={`https://wa.me/${process.env.WHATSAPP_PHONE_NUMBER}`} target="_blank" rel="noopener noreferrer">
                       <div className="flex justify-center items-center">
                         <div className="mr-7 w-5 sm:w-8 md:w-8">
                           <Image
