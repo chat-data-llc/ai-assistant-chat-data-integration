@@ -31,3 +31,8 @@ body {
     text-wrap: balance;
   }
 }
+
+.bg-chatdata-gradient,
+.bg-chatdata-gradient-text {
+  background-image: linear-gradient(135deg, #edb43a 10%, #f80296 60%, #306cfd);
+}
