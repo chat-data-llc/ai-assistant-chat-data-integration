@@ -1,4 +1,4 @@
-# Integrate OpenAI's Assistant API With Multi-platform With No Code
+# Integrate OpenAI's Assistant API With Multi-platform With Low Code (Totally Free)
 
 ## Introduction
 [OpenAI's Assistants API](https://platform.openai.com/docs/assistants/overview?context=with-streaming) empowers developers to create sophisticated AI assistants tailored to their specific application needs. However, once you've developed your assistant, integrating it into various platforms and constructing a frontend infrastructure can be a daunting task. This process includes challenges such as embedding your assistant into websites, and platforms like Slack, Discord, and WhatsApp, not to mention the need for implementing chat history logging, rate limiting, and other protective measures.
@@ -14,7 +14,9 @@ Experience our solution firsthand at the demo page:[https://openai-assistant-dem
 
 - `src/pages/index.js`:  Demonstrates the seamless integration of a chatbot, powered by your Assistant API, into a web interface. This practical guide showcases how to embed your AI assistant directly on your website, providing a vivid example of real-time interaction capabilities with platforms such as Slack, Discord, and WhatsApp.
 
-- `src/pages/api/chat.js`: Provides the backend framework necessary for creating a custom backend URL, which can be integrated with [Chat Data](https://www.chat-data.com/). The primary goal of this repository is to illustrate the integration process in a straightforward manner. For this purpose, we've employed a pre-configured OpenAI Assistant API—specifically, a personal math tutor—following the instructions in this [guide](https://platform.openai.com/docs/assistants/overview?context=with-streaming). It's important to note that the complexity of your Assistant API does not impede the integration process, showcasing the flexibility and adaptability of our solution.
+- `src/pages/api/chat.js`: Provides the backend framework necessary for creating a custom backend URL, which can be integrated with [Chat Data](https://www.chat-data.com/). This can be done for free under the **Free plan** (No Credit card required), which includes the `Flexible backend to power the chatbot` feature. The primary goal of this repository is to illustrate the integration process in a straightforward manner. For this purpose, we've employed a pre-configured OpenAI Assistant API—specifically, a personal math tutor—following the instructions in this [guide](https://platform.openai.com/docs/assistants/overview?context=with-streaming). It's important to note that the complexity of your Assistant API does not impede the integration process, showcasing the flexibility and adaptability of our solution.
+
+![Flexible backend to power the chatbot](./public/chat_data_free_plan.png)
 
 ## How to run the script
 
@@ -91,8 +93,26 @@ Personalize your chatbot by setting up initial greeting messages, suggesting sta
 
 ![chatbot interface setting](./public/chatbot_interface_setting.png)
 
+### 6. Integrating the Chatbot with the website
 
-### 6.Integrating Your Chatbot with Discord, Slack, and WhatsApp
+- **Chat Widget Embedding**: The following script is placed in the `_document.js`  file to embed the chat widget at the bottom right of the page.
+```javascript
+<Script
+  strategy="lazyOnload"
+  src={`https://www.chat-data.com/embed.min.js?chatbotId=${process.env.CHATBOT_ID}`}
+/>
+```
+- **Chat Iframe Embedding**: The following script is inserted in the `index.js` file  to embed the chat iframe on the left side of the page.
+```javascript
+<iframe
+  src={`https://www.chat-data.com/chatbot-iframe/${process.env.CHATBOT_ID}`}
+  width="100%"
+  allow="clipboard-write"
+  frameBorder="0"
+></iframe>
+```
+
+### 7.Integrating Your Chatbot with Discord, Slack, and WhatsApp
 
 This step is optional if you intend to integrate the Assistant API solely with your website. However, for extending the functionality to Slack, Discord, and WhatsApp, follow the detailed guides provided below:
 
@@ -102,7 +122,7 @@ This step is optional if you intend to integrate the Assistant API solely with y
 
 - Whatsapp: [Whatsapp Integration](https://www.chat-data.com/api-reference#section/Chat-Data-Website-Guide/Whatsapp-Integration)
 
-### 7. Deploy your code.
+### 8. Deploy your code.
 
 For production deployment, transfer the code to a Virtual Private Server (VPS). Execute the following commands in the root directory of your local repository:
 
