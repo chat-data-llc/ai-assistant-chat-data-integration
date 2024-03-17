@@ -1,40 +1,120 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Integrate OpenAI's Assistant API With Multi-platform With No Code
 
-## Getting Started
+## Introduction
+[OpenAI's Assistants API](https://platform.openai.com/docs/assistants/overview?context=with-streaming) empowers developers to create sophisticated AI assistants tailored to their specific application needs. However, once you've developed your assistant, integrating it into various platforms and constructing a frontend infrastructure can be a daunting task. This process includes challenges such as embedding your assistant into websites, and platforms like Slack, Discord, and WhatsApp, not to mention the need for implementing chat history logging, rate limiting, and other protective measures.
 
-First, run the development server:
+To streamline this integration process, our repository presents a low-code solution that enables you to deploy your existing Assistant API across multiple platforms with minimal effort. With this approach, you can achieve integration within just 20 minutes, saving valuable time and resources. This solution is designed to help developers swiftly extend the reach of their AI assistants, making them accessible across the web and popular communication platforms without the hassle of building custom integrations from scratch.
+
+# Demo Page
+
+Experience our solution firsthand at the demo page:[https://openai-assistant-demo.chat-data.com/](https://openai-assistant-demo.chat-data.com/)
+![Demo page](./public/ai-assistant-chat-data-integration.png)
+
+# Path
+
+- `src/pages/index.js`:  Demonstrates the seamless integration of a chatbot, powered by your Assistant API, into a web interface. This practical guide showcases how to embed your AI assistant directly on your website, providing a vivid example of real-time interaction capabilities with platforms such as Slack, Discord, and WhatsApp.
+
+- `src/pages/api/chat.js`: Provides the backend framework necessary for creating a custom backend URL, which can be integrated with [Chat Data](https://www.chat-data.com/). The primary goal of this repository is to illustrate the integration process in a straightforward manner. For this purpose, we've employed a pre-configured OpenAI Assistant API—specifically, a personal math tutor—following the instructions in this [guide](https://platform.openai.com/docs/assistants/overview?context=with-streaming). It's important to note that the complexity of your Assistant API does not impede the integration process, showcasing the flexibility and adaptability of our solution.
+
+## How to run the script
+
+### 1. Clone the repo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/chat-data-llc/ai-assistant-chat-data-integration.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Open a terminal in the root directory of your local repository and run:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+npm install
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### 3. Set Up the Environment Variables
+In this section, we guide you through the process of setting up the necessary environment variables. These variables enable your application to interact with external services and APIs securely.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- `ASSISTANT_ID`: 
+For demonstration purposes, we have utilized the `gpt-3.5-turbo-0125` model to create the assistant. You can create your assistant using the following bash command, as described in [step1](https://platform.openai.com/docs/assistants/overview/step-1-create-an-assistant):
 
-## Learn More
+```bash
+curl "https://api.openai.com/v1/assistants" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: $OPENAI_API_KEY" \
+  -H "OpenAI-Beta: assistants=v1" \
+  -d '{
+    "instructions": "You are a personal math tutor. When asked a question, write and run Python code to answer the question.",
+    "name": "Math Tutor(Chat Data Demo",
+    "tools": [{"type": "code_interpreter"}],
+    "model": "gpt-3.5-turbo-0125"
+  }'
+```
+The command's response will include your assistant's ID. Assign this ID to the `ASSISTANT_ID` environment variable. Alternatively, you can create your assistant directly on the OpenAI API[page](https://platform.openai.com/assistants).
 
-To learn more about Next.js, take a look at the following resources:
+- `OPENAI_API_KEY`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Your OpenAI API key, required for making API requests. You can find your API key [here](https://platform.openai.com/api-keys)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `BEARER_TOKEN`:
 
-## Deploy on Vercel
+This token is used to authorize external calls to your  `/api/chat` API endpoint. You may set it as a randomly generated string for enhanced security.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `CHATBOT_ID`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The unique identifier for the chatbot created on the [Chat Data Create](https://www.chat-data.com/my-chatbots)page. Ensure that `custom-model` is selected as the data source and `https://${your domain}/api/chat`  is set as the `Backend API url`. 
+
+Input the `BEARER_TOKEN` you defined earlier as the Bearer token in this setup. 
+
+![create chatbot](./public/create_chatbot.png)
+
+You can find your `CHATBOT_ID` in the **Settings** tab after creating your chatbot.
+
+![chatbot id demo](./public/chatbot_id.png)
+
+- `WHATSAPP_PHONE_NUMBER`:
+
+Your WhatsApp business phone number, including the country code, is needed for WhatsApp integration. For instance, a test number in the US might look like `15550557603`.
+
+Please specify these environment variables in a `.env` file located in the root directory of the repository. This setup ensures your application can securely access and utilize the APIs and services required for its operation.
+
+### 4.Whitelisting Your Domain
+
+To ensure seamless integration of the chatbot widget on your site, it's essential to whitelist your domain. This step allows the chatbot to operate only within specified areas of your website. For added flexibility, you can specify URL paths that should be excluded from the chatbot's operation in the disallow URL input box. This measure guarantees that the chatbot remains active only on pertinent pages, providing around-the-clock customer support without intrusion.
+
+![chatbot domain whitelist](./public/chatbot_domain_whitelist.png)
+
+### 5.Customizing Your Chatbot Interface
+
+Personalize your chatbot by setting up initial greeting messages, suggesting starter questions for users, and customizing the chatbot's icon and name. These adjustments help align the chatbot's appearance and behavior with your brand identity and the chatbot's intended personality.
+
+
+![chatbot interface setting](./public/chatbot_interface_setting.png)
+
+
+### 6.Integrating Your Chatbot with Discord, Slack, and WhatsApp
+
+This step is optional if you intend to integrate the Assistant API solely with your website. However, for extending the functionality to Slack, Discord, and WhatsApp, follow the detailed guides provided below:
+
+- Slack: [How to Launch Your Custom Slack AI Chatbot Without Writing a Single Line of Code](https://www.chat-data.com/blog/how-to-launch-your-custom-slack-ai-chatbot-without-writing-a-single-line-of-code)
+
+- Discord: [Discord Bot Integration](https://www.chat-data.com/api-reference#section/Chat-Data-Website-Guide/Discord-Bot-Integration)
+
+- Whatsapp: [Whatsapp Integration](https://www.chat-data.com/api-reference#section/Chat-Data-Website-Guide/Whatsapp-Integration)
+
+### 7. Deploy your code.
+
+For production deployment, transfer the code to a Virtual Private Server (VPS). Execute the following commands in the root directory of your local repository:
+
+```bash
+npm run build & npm run start
+```
+Using Docker for deployment is recommended when operating on a VPS. Please note, deploying on Vercel's free plan is not advised due to a 10-second timeout limit, which may not accommodate the Assistant API's response times.
+
+## Conclusion
+
+The Assistant API offers a robust solution for automating and enhancing various tasks. This repository demonstrates how to unleash the full potential of your Assistant API by deploying it across multiple platforms with minimal coding required. By following these steps, you can significantly expand the accessibility and functionality of your Assistant API, offering a more integrated and efficient user experience.
+
+## Contact
+
+[Chat Data LLC](admin@chat-data.com)

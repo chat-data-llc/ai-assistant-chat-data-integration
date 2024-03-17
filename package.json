@@ -2,6 +2,7 @@
   "name": "ai-assistant-chat-data-integration",
   "version": "0.1.0",
   "private": true,
+  "deploymentUrl":"https://openai-assistant-demo.chat-data.com/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -142,7 +142,7 @@ export default function Home() {
               </tbody>
             </table>
             <div className="mt-2 sm:mt-4 md:mt-6 lg:mt-8">
-              Open sourced at this <Link className="text-blue-500 hover:text-blue-600 hover:underline" href="#">Github repo</Link>
+              Open sourced at this <Link className="text-blue-500 hover:text-blue-600 hover:underline" href="https://github.com/chat-data-llc/ai-assistant-chat-data-integration">Github repo</Link>
             </div>
           </div>
         </main>
