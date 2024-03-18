@@ -32,7 +32,7 @@ const validateApiKey = (req, res) => {
 export default async function handler(req, res) {
     // Check if the request method is POST
     if (req.method === 'POST') {
-        // validateApiKey(req, res);
+        validateApiKey(req, res);
         // Process a POST request
         const { messages, stream } = req.body; // Assuming the body contains a "message" field
         try {

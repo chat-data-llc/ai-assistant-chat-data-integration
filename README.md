@@ -7,7 +7,12 @@ To streamline this integration process, our repository presents a low-code solut
 
 # Demo Page
 
-Experience our solution firsthand at the demo page:[https://openai-assistant-demo.chat-data.com/](https://openai-assistant-demo.chat-data.com/)
+Experience our solution firsthand at the demo page:
+
+[https://openai-assistant-demo.chat-data.com/](https://openai-assistant-demo.chat-data.com/)
+
+[https://ai-assistant-chat-data-integration.vercel.app/](https://ai-assistant-chat-data-integration.vercel.app/)
+
 ![Demo page](./public/ai-assistant-chat-data-integration.png)
 
 # Path
@@ -124,12 +129,35 @@ This step is optional if you intend to integrate the Assistant API solely with y
 
 ### 8. Deploy your code.
 
-For production deployment, transfer the code to a Virtual Private Server (VPS). Execute the following commands in the root directory of your local repository:
+For production deployment, transfer the code to a Virtual Private Server (VPS) or deploy in [vercel](https://vercel.com/). 
+
+#### VPS deployment
+
+In VPS, Execute the following commands in the root directory of your local repository:
 
 ```bash
 npm run build & npm run start
 ```
-Using Docker for deployment is recommended when operating on a VPS. Please note, deploying on Vercel's free plan is not advised due to a 10-second timeout limit, which may not accommodate the Assistant API's response times.
+Using Docker for deployment is recommended when operating on a VPS. 
+#### Vercel deployment
+
+- Click import your project:
+
+![Vercel Import](./public/vercel_project_import.png)
+
+- Add Environment Variables:
+
+![Env Variables](./public/vercel_env_variables.png)
+ 
+- Get your deployed page with domain name:
+
+![Vercel Deployment](./public/vercel_deployment_domain.png)
+
+- Whitelist your Vercel domain:
+
+![Domain Whitelist](./public/chatbot_domain_whitelist.png)
+
+- Done. You should get something exactly the same as the demo: [https://ai-assistant-chat-data-integration.vercel.app](https://ai-assistant-chat-data-integration.vercel.app)
 
 ## Conclusion
 
