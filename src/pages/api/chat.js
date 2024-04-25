@@ -40,7 +40,10 @@ export default async function handler(req, res) {
             // Find the last user conversation. 
             const lastUserMessage = messages.findLast(message => message.role === 'user');
             const thread = await openai.beta.threads.create({
-                messages: [lastUserMessage]
+                messages: [{
+                    role: lastUserMessage.role,
+                    content: lastUserMessage.content
+                }]
             });
 
             // We use the createAndStream SDK helper to create a run with
