@@ -1,3 +1,5 @@
+import UserInfoDisplay from "@/components/UserInfoDisplay";
+import UserInfoSubmissionForm from "@/components/UserInfoSubmissionForm";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
@@ -22,6 +24,11 @@ export default function Home() {
           ></iframe>
         </div>
         <main className={`flex flex-col gap-8 mt-8 justify-center px-6 pb-10 ${inter.className}`}>
+          <h2 className="text-xl font-semibold text-gray-800">
+            Features on this panel require subscriptions
+          </h2>
+          <UserInfoSubmissionForm />
+          <UserInfoDisplay/>
           <div className="hidden z-10 max-w-5xl w-full items-center justify-end font-mono text-sm lg:flex">
             <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
               <a
