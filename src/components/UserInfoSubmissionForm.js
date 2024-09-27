@@ -3,12 +3,12 @@ import Alert from './Alert';
 
 export default function UserInfoSubmissionForm() {
     const [submitted, setSubmitted] = useState(false);
-    const [formData, setFormData] = useState({ name: '', info: '' });
+    const [formData, setFormData] = useState({ name: '', info: '', email: '' });
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Handle form submission logic here
-        const { name, info } = formData;
+        const { name, info, email } = formData;
 
         // Send post message with user info to the embedded iframe
         const iframes = document.querySelectorAll(`iframe[src^="https://www.chat-data.com/chatbot-iframe/"]`);
@@ -18,6 +18,7 @@ export default function UserInfoSubmissionForm() {
                     event: 'user-info',
                     user: {
                         name,
+                        email,
                         info
                     }
                 }, '*');
@@ -64,6 +65,25 @@ export default function UserInfoSubmissionForm() {
                                     value={formData.name}
                                     onChange={handleInputChange}
                                     className="p-2 block w-full rounded-md border-gray-300 bg-white py-1.5 text-black shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        
+                        <div className="sm:col-span-4">
+                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-black">
+                                Email
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    className="p-2 block w-full rounded-md border-gray-300 bg-white py-1.5 text-black shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                                    required
                                 />
                             </div>
                         </div>
@@ -81,6 +101,7 @@ export default function UserInfoSubmissionForm() {
                                     onChange={handleInputChange}
                                     className="block w-full rounded-md border-gray-300 bg-white p-1.5 text-black shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                                     placeholder="User Information..."
+                                    required
                                 />
                             </div>
                         </div>
