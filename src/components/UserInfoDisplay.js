@@ -22,7 +22,6 @@ export default function UserInfoDisplay() {
                     }
                     return;
                 default:
-                    console.error('Unexpected postmessage :', event.data);
                     return;
             }
         };
@@ -36,7 +35,7 @@ export default function UserInfoDisplay() {
 
     const handleClearUserInfo = () => {
         // Send post message to clear user info in the embedded iframe
-        const iframes = document.querySelectorAll(`iframe[src^="https://www.chat-data.com/chatbot-iframe/${process.env.CHATBOT_ID}"]`);
+        const iframes = document.querySelectorAll(`iframe[src^="https://www.chat-data.com/chatbot-iframe/"]`);
         if (iframes.length > 0) {
             iframes.forEach(iframe => {
                 iframe.contentWindow.postMessage({

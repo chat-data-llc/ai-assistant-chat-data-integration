@@ -11,7 +11,7 @@ export default function UserInfoSubmissionForm() {
         const { name, info } = formData;
 
         // Send post message with user info to the embedded iframe
-        const iframes = document.querySelectorAll(`iframe[src^="https://www.chat-data.com/chatbot-iframe/${process.env.NEXT_PUBLIC_CHATBOT_ID}"]`);
+        const iframes = document.querySelectorAll(`iframe[src^="https://www.chat-data.com/chatbot-iframe/"]`);
         if (iframes.length > 0) {
             iframes.forEach(iframe => {
                 iframe.contentWindow.postMessage({

@@ -38,12 +38,14 @@ export default async function handler(req, res) {
         try {
             // We do not manage chat history for demonstration purpose.
             // Find the last user conversation. 
-            const lastUserMessage = messages.findLast(message => message.role === 'user');
+            const messagesToSend = messages.map( message => {
+                return {
+                    role: message.role === 'assistant' ? 'assistant' : 'user',
+                    content: message.content
+                }
+            })
             const thread = await openai.beta.threads.create({
-                messages: [{
-                    role: lastUserMessage.role,
-                    content: lastUserMessage.content
-                }]
+                messages: messagesToSend
             });
 
             // We use the createAndStream SDK helper to create a run with
