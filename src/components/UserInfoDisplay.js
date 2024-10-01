@@ -35,7 +35,7 @@ export default function UserInfoDisplay() {
 
     const handleClearUserInfo = () => {
         // Send post message to clear user info in the embedded iframe
-        const iframes = document.querySelectorAll(`iframe[src^="https://www.chat-data.com/chatbot-iframe/"]`);
+        const iframes = document.querySelectorAll(`iframe`);
         if (iframes.length > 0) {
             iframes.forEach(iframe => {
                 iframe.contentWindow.postMessage({
