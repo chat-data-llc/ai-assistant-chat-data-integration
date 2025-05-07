@@ -67,7 +67,7 @@ Your OpenAI API key, required for making API requests. You can find your API key
 
 This token is used to authorize external calls to your  `/api/chat` API endpoint. You may set it as a randomly generated string for enhanced security.
 
-- `CHATBOT_ID`:
+- `NEXT_PUBLIC_CHATBOT_ID`:
 
 The unique identifier for the chatbot created on the [Chat Data Create](https://www.chat-data.com/my-chatbots)page. Ensure that `custom-model` is selected as the data source and `https://${your domain}/api/chat`  is set as the `Backend API url`. 
 
@@ -75,11 +75,11 @@ Input the `BEARER_TOKEN` you defined earlier as the Bearer token in this setup.
 
 ![create chatbot](./public/create_chatbot.png)
 
-You can find your `CHATBOT_ID` in the **Settings** tab after creating your chatbot.
+You can find your `NEXT_PUBLIC_CHATBOT_ID` in the **Settings** tab after creating your chatbot.
 
 ![chatbot id demo](./public/chatbot_id.png)
 
-- `WHATSAPP_PHONE_NUMBER`:
+- `NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER`:
 
 Your WhatsApp business phone number, including the country code, is needed for WhatsApp integration. For instance, a test number in the US might look like `15550557603`.
 
@@ -104,13 +104,13 @@ Personalize your chatbot by setting up initial greeting messages, suggesting sta
 ```javascript
 <Script
   strategy="lazyOnload"
-  src={`https://www.chat-data.com/embed.min.js?chatbotId=${process.env.CHATBOT_ID}`}
+  src={`https://www.chat-data.com/embed.min.js?chatbotId=${process.env.NEXT_PUBLIC_CHATBOT_ID}`}
 />
 ```
 - **Chat Iframe Embedding**: The following script is inserted in the `index.js` file  to embed the chat iframe on the left side of the page.
 ```javascript
 <iframe
-  src={`https://www.chat-data.com/chatbot-iframe/${process.env.CHATBOT_ID}`}
+  src={`https://www.chat-data.com/chatbot-iframe/${process.env.NEXT_PUBLIC_CHATBOT_ID}`}
   width="100%"
   allow="clipboard-write"
   frameBorder="0"

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,10 +15,14 @@ export default function Home() {
         <title>Integrate OpenAI Assistant With the Website Through Chat Data</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.chat-data.com/embed.min.js?chatbotId=${process.env.NEXT_PUBLIC_CHATBOT_ID}`}
+      />
       <section className="w-screen h-full md:h-dvh grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:h-full h-[60vh] bg-[#d4dcff] relative overflow-hidden flex justify-center">
           <iframe
-            src={`https://www.chat-data.com/chatbot-iframe/${process.env.CHATBOT_ID}`}
+            src={`https://www.chat-data.com/chatbot-iframe/${process.env.NEXT_PUBLIC_CHATBOT_ID}`}
             width="100%"
             allow="clipboard-write"
             frameBorder="0"
@@ -28,7 +33,7 @@ export default function Home() {
             Features on this panel require subscriptions
           </h2>
           <UserInfoSubmissionForm />
-          <UserInfoDisplay/>
+          <UserInfoDisplay />
           <div className="hidden z-10 max-w-5xl w-full items-center justify-end font-mono text-sm lg:flex">
             <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
               <a
@@ -122,7 +127,7 @@ export default function Home() {
                 </tr>
                 <tr >
                   <td className="p-2">
-                    <Link href={`https://wa.me/${process.env.WHATSAPP_PHONE_NUMBER}`} target="_blank" rel="noopener noreferrer">
+                    <Link href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER}`} target="_blank" rel="noopener noreferrer">
                       <div className="flex justify-center items-center">
                         <div className="mr-7 w-5 sm:w-8 md:w-8">
                           <Image

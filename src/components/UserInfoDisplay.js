@@ -1,23 +1,20 @@
+import Script from "next/script";
 import { useEffect, useState } from "react";
 
 export default function UserInfoDisplay() {
     const [userInfo, setUserInfo] = useState(null);
+    const [isSdkLoaded, setIsSdkLoaded] = useState(false);
 
     useEffect(() => {
-        const handleMessage = (event) => {
-            console.log('Received message:', event.data);
-            console.log(event.origin)
-            if (event.origin !== "https://www.chat-data.com") {
-                return;
-            }
-            switch (event.data && event.data.event) {
+        const handleMessage = (data) => {
+            switch (data && data.event) {
                 case 'lead-submission':
-                    if (event.data.payload) {
+                    if (data.payload) {
                         setUserInfo({
-                            name: event.data.payload.name,
-                            phone: event.data.payload.phone,
-                            email: event.data.payload.email,
-                            source: event.data.payload.source
+                            name: data.payload.name,
+                            phone: data.payload.phone,
+                            email: data.payload.email,
+                            source: data.payload.source
                         });
                     }
                     return;
@@ -26,12 +23,23 @@ export default function UserInfoDisplay() {
             }
         };
 
-        window.addEventListener('message', handleMessage);
+        if (isSdkLoaded) {
+            window.chatbot.addEventListener('chat', handleMessage);
+            window.chatbot.addEventListener('lead-submission', handleMessage);
+            window.chatbot.addEventListener('live-chat-escalation', handleMessage);
+            window.chatbot.addEventListener('minimize-widget', handleMessage);
+        }
+
 
         return () => {
-            window.removeEventListener('message', handleMessage);
+            if (window.chatData) {
+                window.chatbot.removeEventListener('chat', handleMessage);
+                window.chatbot.removeEventListener('lead-submission', handleMessage);
+                window.chatbot.removeEventListener('live-chat-escalation', handleMessage);
+                window.chatbot.removeEventListener('minimize-widget', handleMessage);
+            }
         };
-    }, []);
+    }, [isSdkLoaded]);
 
     const handleClearUserInfo = () => {
         // Send post message to clear user info in the embedded iframe
@@ -51,6 +59,12 @@ export default function UserInfoDisplay() {
 
     return (
         <div className="border-t border-gray-200">
+            <Script
+                strategy="lazyOnload"
+                src="https://www.chat-data.com/chatbotsdk.min.js"
+                data-chatbot-id={process.env.NEXT_PUBLIC_CHATBOT_ID}
+                onLoad={() => setIsSdkLoaded(true)}
+            />
             <h2 className="text-base font-semibold leading-7 text-black">User Information Received From Chatbot</h2>
             {userInfo ? (
                 <>
