@@ -9,22 +9,12 @@ export default function UserInfoSubmissionForm() {
         event.preventDefault();
         // Handle form submission logic here
         const { name, info, email } = formData;
-
-        // Send post message with user info to the embedded iframe
-        const iframes = document.querySelectorAll(`iframe`);
-        if (iframes.length > 0) {
-            iframes.forEach(iframe => {
-                iframe.contentWindow.postMessage({
-                    event: 'user-info',
-                    user: {
-                        name,
-                        email,
-                        info
-                    }
-                }, '*');
+        if (window.chatbot) {
+            window.chatbot.sendUserInfo({
+                name,
+                email,
+                info,
             });
-        } else {
-            console.error('No iframes found');
         }
         setSubmitted(true);
         // Clear form fields
@@ -69,7 +59,7 @@ export default function UserInfoSubmissionForm() {
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="sm:col-span-4">
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-black">
                                 Email
